@@ -1,0 +1,254 @@
+openapi: 3.0.0
+info:
+  title: Storage API
+  description: Student Demo API by Oliabka
+  contact:
+    name: Oliabka
+    url: https://github.com/oliabka
+  version: 1.0.0
+servers: 
+  - url: http://oliabka.api.com/v1
+paths:
+  /items:
+    post:
+      tags:
+      - items
+      summary: Add new item to storage
+      operationId: create_items
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "JÄRVFJÄLLET"
+                description:
+                  type: string
+                  example: "Office chair with armrests, Grann white"
+                amount:
+                  type: integer
+                  example: 250
+      responses:
+          '200': 
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Item"
+          '400':
+            description: Bad request
+          '401': 
+            description: Unauthorised
+          '403':
+            description: Forbidden
+          '404':
+            description: Not found
+          '405':
+            description: Invalid input
+          '500': 
+            description: Internal Server Error
+  /items/{id}:
+    get:
+      tags:
+      - items
+      summary: Finds info for a specific item
+      operationId: show_item_by_id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item" 
+        '400':
+          description: Bad request
+        '401': 
+          description: Unauthorised
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '405':
+          description: Invalid input
+        '500': 
+          description: Internal Server Error
+    put:
+      tags:
+      - items
+      summary: Updates all info about a specific item
+      operationId: update_item_by_id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+          description: "Item info that needs to be updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                required: 
+                  - name
+                properties:
+                  name:
+                    type: string
+                    example: "JÄRVFJÄLLET"
+                  description:
+                    type: string
+                    example: "Office chair with armrests, Grann white"
+                  amount:
+                    type: integer
+                    example: 250
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item" 
+        '400':
+          description: Bad request
+        '401': 
+          description: Unauthorised
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '405':
+          description: Invalid input
+        '500': 
+          description: Internal Server Error
+    patch:
+      tags:
+      - items
+      summary: Updates select info about a specific item
+      operationId: update_item_info_by_id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        description: "Item info that needs to be updated"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "JÄRVFJÄLLET"
+                description:
+                  type: string
+                  example: "Office chair with armrests, Grann white"
+                amount:
+                  type: integer
+                  example: 250
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item" 
+        '400':
+          description: Bad request
+        '401': 
+          description: Unauthorised
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '405':
+          description: Invalid input
+        '500': 
+          description: Internal Server Error
+    delete:
+      tags:
+      - items
+      summary: Deletes a specific item from storage
+      operationId: delete_item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200': 
+          description: OK
+          content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    data:
+                      type: string
+                      nullable: true
+        '400':
+          description: Bad request
+        '401': 
+          description: Unauthorised
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '405':
+          description: Invalid input
+        '500': 
+          description: Internal Server Error 
+components:
+  schemas:
+    Item:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "JÄRVFJÄLLET"
+        description:
+          type: string
+          example: "Office chair with armrests, Grann white"
+        amount:
+          type: integer
+          format: int32
+          example: 250
+    Items:
+      type: array
+      items:
+        $ref: "#/components/schemas/Item"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        meta:
+          type: object
