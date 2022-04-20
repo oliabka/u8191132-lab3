@@ -10,8 +10,8 @@ class PatchItemRequest extends BaseFormRequest
         $id = (int) $this->route('id');
         return [
             'name' => [Rule::unique('items')->ignore($id)],
-            'description' => ['nullable', 'string'],
-            'amount' => ['nullable', 'integer'],
+            'description' => ['string'],
+            'amount' => ['integer'],
         ];
     }
 }

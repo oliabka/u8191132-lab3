@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $description
  * @property integer $amount
  */
-class Address extends Model
+class Item extends Model
 {
     protected $table = 'items';
 

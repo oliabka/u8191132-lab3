@@ -6,13 +6,13 @@ info:
     name: Oliabka
     url: https://github.com/oliabka
   version: 1.0.0
-servers: 
-  - url: http://oliabka.api.com/v1
+servers:
+  - url: http://u8191132-lab3.local/v1
 paths:
   /items:
     post:
       tags:
-      - items
+        - items
       summary: Add new item to storage
       operationId: create_items
       requestBody:
@@ -27,32 +27,38 @@ paths:
                 description:
                   type: string
                   example: "Office chair with armrests, Grann white"
-                amount:
+                amount_in_stock:
                   type: integer
                   example: 250
       responses:
-          '200': 
-            description: OK
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Item"
-          '400':
-            description: Bad request
-          '401': 
-            description: Unauthorised
-          '403':
-            description: Forbidden
-          '404':
-            description: Not found
-          '405':
-            description: Invalid input
-          '500': 
-            description: Internal Server Error
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '405':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /items/{id}:
     get:
       tags:
-      - items
+        - items
       summary: Finds info for a specific item
       operationId: show_item_by_id
       parameters:
@@ -62,29 +68,41 @@ paths:
           schema:
             type: integer
             example: 1
-      
+
       responses:
-        '200': 
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Item" 
+                $ref: "#/components/schemas/Item"
         '400':
           description: Bad request
-        '401': 
-          description: Unauthorised
-        '403':
-          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         '404':
           description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         '405':
           description: Invalid input
-        '500': 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     put:
       tags:
-      - items
+        - items
       summary: Updates all info about a specific item
       operationId: update_item_by_id
       parameters:
@@ -95,45 +113,57 @@ paths:
             type: integer
             example: 1
       requestBody:
-          description: "Item info that needs to be updated"
-          content:
-            application/json:
-              schema:
-                type: object
-                required: 
-                  - name
-                properties:
-                  name:
-                    type: string
-                    example: "JÄRVFJÄLLET"
-                  description:
-                    type: string
-                    example: "Office chair with armrests, Grann white"
-                  amount:
-                    type: integer
-                    example: 250
+        description: "Item info that needs to be updated"
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  example: "JÄRVFJÄLLET"
+                description:
+                  type: string
+                  example: "Office chair with armrests, Grann white"
+                amount_in_stock:
+                  type: integer
+                  example: 250
       responses:
-        '200': 
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Item" 
+                $ref: "#/components/schemas/Item"
         '400':
           description: Bad request
-        '401': 
-          description: Unauthorised
-        '403':
-          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         '404':
           description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         '405':
           description: Invalid input
-        '500': 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     patch:
       tags:
-      - items
+        - items
       summary: Updates select info about a specific item
       operationId: update_item_info_by_id
       parameters:
@@ -156,31 +186,43 @@ paths:
                 description:
                   type: string
                   example: "Office chair with armrests, Grann white"
-                amount:
+                amount_in_stock:
                   type: integer
                   example: 250
       responses:
-        '200': 
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Item" 
+                $ref: "#/components/schemas/Item"
         '400':
           description: Bad request
-        '401': 
-          description: Unauthorised
-        '403':
-          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         '404':
           description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         '405':
           description: Invalid input
-        '500': 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     delete:
       tags:
-      - items
+        - items
       summary: Deletes a specific item from storage
       operationId: delete_item
       parameters:
@@ -191,28 +233,40 @@ paths:
             type: integer
             example: 1
       responses:
-        '200': 
+        '200':
           description: OK
           content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    data:
-                      type: string
-                      nullable: true
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    nullable: true
         '400':
           description: Bad request
-        '401': 
-          description: Unauthorised
-        '403':
-          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         '404':
           description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
         '405':
           description: Invalid input
-        '500': 
-          description: Internal Server Error 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     Item:
