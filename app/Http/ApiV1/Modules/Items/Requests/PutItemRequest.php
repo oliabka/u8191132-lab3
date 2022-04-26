@@ -7,11 +7,12 @@ class PostPutItemRequest extends BaseFormRequest
 {
     public function rules(): array
     {
-        $id = (int) $this->route('id');
+//        $id = (int) $this->route('id');
         return [
-            'name' => ['required', Rule::unique('items')->ignore($id)],
+//            'name' => ['required', Rule::unique('items')->ignore($id)],
+            'name' => ['required'],
             'description' => ['string'],
-            'amount' => ['integer'],
+            'amount' => ['integer', ''],
         ];
     }
 }
