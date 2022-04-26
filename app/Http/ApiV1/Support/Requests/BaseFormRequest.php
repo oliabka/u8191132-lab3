@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\ApiV1\Support\Requests;
-use Illuminate\Http\Request;
-class BaseFormRequest extends Request
+use Illuminate\Foundation\Http\FormRequest;
+class BaseFormRequest extends FormRequest
 {
 
 }

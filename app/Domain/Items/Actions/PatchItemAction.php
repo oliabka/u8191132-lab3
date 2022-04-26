@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Domain\Items\Actions;
+
 use App\Domain\Items\Models\Item;
 
 class PatchItemAction

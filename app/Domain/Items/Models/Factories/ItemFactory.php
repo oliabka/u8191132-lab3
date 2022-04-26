@@ -1,12 +1,10 @@
 <?php
 
-namespace Database\Factories;
+namespace App\Domain\Items\Models\Factories;
 
+use App\Domain\Items\Models\Item;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Item;
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Item>
- */
+
 class ItemFactory extends Factory
 {
     /**
@@ -15,6 +13,7 @@ class ItemFactory extends Factory
      * @var string
      */
     protected $model = Item::class;
+
     /**
      * Define the model's default state.
      *
@@ -23,7 +22,7 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => $this->faker->unique()->word(),
             'description' => $this->faker->sentence(),
             'amount' => $this->faker->numberBetween(0, 1000),
         ];
