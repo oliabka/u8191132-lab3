@@ -354,7 +354,9 @@ components:
         code:
           type: integer
           format: int32
+          example: 400
         message:
           type: string
+          example: "Invalid value for..."
         meta:
           type: object
