@@ -354,6 +354,12 @@ components:
         code:
           type: integer
           format: int32
+          enum:
+            - 401
+            - 403
+            - 404
+            - 400
+            - 500
           example: 400
         message:
           type: string
