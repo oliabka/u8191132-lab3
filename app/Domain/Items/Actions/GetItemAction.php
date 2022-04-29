@@ -3,6 +3,7 @@
 namespace App\Domain\Items\Actions;
 
 use App\Domain\Items\Models\Item;
+use Symfony\Component\Console\Input\Input;
 
 class GetItemAction
 {

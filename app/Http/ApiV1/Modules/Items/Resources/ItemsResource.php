@@ -10,6 +10,7 @@ use App\Http\ApiV1\Support\Resources\BaseJsonResource;
  */
 class ItemsResource extends BaseJsonResource
 {
+
     public function toArray($request)
     {
         return [

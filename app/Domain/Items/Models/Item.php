@@ -3,9 +3,11 @@
 namespace App\Domain\Items\Models;
 
 use App\Domain\Items\Models\Factories\ItemFactory;
+use App\Domain\Shipments\Models\Shipment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Item
@@ -36,5 +38,15 @@ class Item extends Model
     public static function factory(): ItemFactory
     {
         return ItemFactory::new();
+    }
+
+    /**
+     * Defines one-to-many relation for tables
+     *
+     * @returns HasMany
+     */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Shipment::class);
     }
 }

@@ -10,6 +10,14 @@ use App\Http\ApiV1\Support\Resources\BaseJsonResource;
  */
 class ExtendedItemsResource extends BaseJsonResource
 {
+    protected $shipments;
+
+    public function addShipments($shipments)
+    {
+        $this->shipments = $shipments;
+        return $this;
+    }
+
 
     public function toArray($request)
     {
@@ -19,6 +27,7 @@ class ExtendedItemsResource extends BaseJsonResource
             'name' => $this->name,
             'description' => $this->description,
             'amount' => $this->amount,
+            'shipments' => $this->shipments,
         ];
     }
 }
