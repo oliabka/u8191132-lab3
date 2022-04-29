@@ -57,11 +57,11 @@ class ItemsController extends Controller
 
     public function get(int $id, GetItemAction $action, Request $request): BaseJsonResource
     {
-        $shipments = array();
-        foreach (Shipment::where('item_id', $id)->get() as $shipment) {
-            $shipments[] = new ShipmentsResource($shipment);
-        }
-        if ($request->get('include')) {
+        if ($request->get('include') === 'shipments') {
+            $shipments = array();
+            foreach (Shipment::where('item_id', $id)->get() as $shipment) {
+                $shipments[] = new ShipmentsResource($shipment);
+            }
             return (new ExtendedItemsResource($action->execute($id)))->addShipments($shipments);
         } else {
             return new ItemsResource($action->execute($id));
