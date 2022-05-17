@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\ApiV1\Modules\Items\Controllers\ItemsController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,3 +28,5 @@ Route::patch('/items/{id}', [ItemsController::class, 'patch']);
 Route::put('/items/{id}', [ItemsController::class, 'put']);
 
 Route::post('/items', [ItemsController::class, 'post']);
+
+Route::get('/items_index', [ItemsController::class, 'getIndex']);
