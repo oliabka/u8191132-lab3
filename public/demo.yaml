@@ -8,6 +8,11 @@ info:
   version: 1.0.0
 servers:
   - url: http://u8191132-lab3.local/v1
+tags:
+  - name: items
+    description: Requests about items in the database
+  - name: index
+    description: Requests to the indexes
 paths:
   /items:
     post:
@@ -295,6 +300,79 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /items_index:
+    post:
+      tags:
+        - index
+      summary: Returns data from items index
+      operationId: get_items_index
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                match:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "JÄRVFJÄLLET"
+                    description:
+                      type: string
+                      example: "Office chair with armrests, Grann white"
+                    amount:
+                      type: integer
+                      format: int32
+                      example: 250
+                order:
+                  type: string
+                  example: "asc"
+                page size:
+                  type: integer
+                  format: int32
+                  example: 10
+                page:
+                  type: integer
+                  format: int32
+                  example: 0
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/IndexResult"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '405':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   schemas:
     Item:
@@ -345,6 +423,47 @@ components:
           type: integer
           format: int64
           example: 1
+    IndexResult:
+      type: object
+      required:
+        - _index
+        - _type
+        - _id
+        - _score
+        - _source
+      properties:
+        _index:
+          type: string
+          example: "items_index"
+        _type:
+          type: string
+          example: "_doc"
+        _id:
+          type: string
+          example: "1"
+        _score:
+          type: integer
+          example: 1
+        _source:
+          type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              example: "JÄRVFJÄLLET"
+            description:
+              type: string
+              example: "Office chair with armrests, Grann white"
+            amount:
+              type: integer
+              format: int32
+              example: 250
+        sort:
+          type: array
+          items:
+            type: integer
+            example: 250
     Error:
       type: object
       required:

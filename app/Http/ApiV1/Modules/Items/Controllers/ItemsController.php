@@ -69,7 +69,7 @@ class ItemsController extends Controller
         }
     }
 
-    public function getIndex(Request $request): JsonResponse
+    public function searchIndex(Request $request): JsonResponse
     {
         $hosts = [
             'http://127.0.0.1:9200',
@@ -77,12 +77,8 @@ class ItemsController extends Controller
 
         $size = $request->json('page size', 1000);
         $from = $request->json('page', 0) * $size;
-        $sort_initial = $request->json('sort by');
-        $sort = [];
-        foreach ($sort_initial as $key) {
-            $sort[] = [$key => ['order' => 'asc']];
-        }
-        //$sort = [$sort];
+        $sort_order = $request->json('order');
+        $sort = ($sort_order === "asc" | $sort_order === "desc") ? [['amount' => $sort_order]] : [];
         $match = $request->json('match');
         if (!$match) {
             $query = [
@@ -96,24 +92,18 @@ class ItemsController extends Controller
             $query = ['bool' => ['must' => $match_query]];
         }
 
-        //$query = ['bool' => ['must' => [['match' => ['amount' => 510]], ['match' => ['name' => 'omnis']]]]];
 
         $params = [
             'index' => 'items_index',
             'body' => [
                 'query' => $query,
-                'sort' => [
-                    ['description' => ['order' => 'asc']],
-                    ['name' => ['order' => 'asc']]
-                ],
+                'sort' => $sort,
                 'size' => $size,
                 'from' => $from,
             ]
-        ];//                    'sort' => $sort,
+        ];
         $client = ClientBuilder::create()->setHosts($hosts)->build();
         $response = $client->search($params);
-        return response()->json(['results' => $response['hits']['hits']]);
-        //return response()->json($sort);
-
+        return response()->json(['data' => $response['hits']['hits']]);
     }
 }

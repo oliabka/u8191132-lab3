@@ -29,4 +29,4 @@ Route::put('/items/{id}', [ItemsController::class, 'put']);
 
 Route::post('/items', [ItemsController::class, 'post']);
 
-Route::get('/items_index', [ItemsController::class, 'getIndex']);
+Route::post('/items_index', [ItemsController::class, 'searchIndex']);
